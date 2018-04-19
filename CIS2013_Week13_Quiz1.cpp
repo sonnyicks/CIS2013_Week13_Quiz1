@@ -45,23 +45,24 @@ class BankAccount{
 
 class Savings: public BankAccount{
 	public:
-	double minimum_balance = 0.00;
-	double withdrawal_limit = 0.00;
+	double minimum_balance = 10.00;
+	double withdrawal_limit = 1000.00;
 };
 class Checking: public BankAccount{
-	double overdraft_fee = 0.00;
+	double overdraft_fee = 25.00;
 };
 
 void menu();
 void choice();
-void open_account();
-
+BankAccount open_account();
 Checking mine;
+
 
 int main(){
 	menu();
 	while(true){
-		choice();
+		open_account();
+		
 	}
 
 	
@@ -101,16 +102,20 @@ void choice(){
 	}
 }
 
-void open_account(){
+BankAccount open_account(){
 	char a;
 	cout << "What type of account do you want to open? \n"
 		 << "Savings (s) or Checking (c): ";
 	cin >> a;
 	if (a=='c'){
 		Checking b;
+		b.print();
+		return b;
 	}
 	else if (a=='s'){
 		Savings a;
+		a.print();
+		return a;
 	}
 }
 
