@@ -9,8 +9,14 @@ class BankAccount{
 	string phone;
 	double balance;
 	double rate = 5.50;
-	double deposit();
 	
+	double deposit(){
+	double d;
+	cout << "How much would you like to deposit?: ";
+	cin >> d;
+	balance+=d;
+	print();
+}
 	double withdraw(){
 	double w;
 	cout << "How much would you like to withdrawal?: ";
@@ -56,7 +62,17 @@ class BankAccount{
 class Savings: public BankAccount{
 	public:
 	double minimum_balance = 10.00;
-	double withdrawal_limit = 1000.00;
+	
+	double withdrawal(){
+		double w;
+		if (w<=1000){
+			balance-=w;
+			if (balance<10){cout << "Warning, account below minimal balance.";}
+		}
+		else {cout << "Withdrawal amount too high; transaction cancelled.";}
+	}
+	
+	
 };
 class Checking: public BankAccount{
 	public:
@@ -142,13 +158,7 @@ char open_account(){
 
 
 
-double BankAccount::deposit(){
-	double d;
-	cout << "How much would you like to deposit?: ";
-	cin >> d;
-	balance+=d;
-	print();
-}
+
 
 void BankAccount::print(){
 	cout << "Name: " << name << endl
