@@ -10,7 +10,17 @@ class BankAccount{
 	double balance;
 	double rate = 5.50;
 	double deposit();
-	double withdraw();
+	
+	double withdraw(){
+	double w;
+	cout << "How much would you like to withdrawal?: ";
+	cin >> w;
+	if (w>balance){
+		cout << "You have overdrawn.";
+	}
+	else {balance-=w;}
+	print();
+}
 	void print();
 	
 	BankAccount(){
@@ -49,12 +59,25 @@ class Savings: public BankAccount{
 	double withdrawal_limit = 1000.00;
 };
 class Checking: public BankAccount{
+	public:
 	double overdraft_fee = 25.00;
+	
+	double withdraw(){
+	double w;
+	cout << "How much would you like to withdrawal?: ";
+	cin >> w;
+	if (w>balance){
+		cout << "You have overdrawn.";
+		balance = balance - w - 25;
+	}
+	else {balance-=w;}
+	print();
+}
 };
 
 void menu();
 void choice();
-BankAccount open_account();
+char open_account();
 Checking mine;
 
 
@@ -102,7 +125,7 @@ void choice(){
 	}
 }
 
-BankAccount open_account(){
+char open_account(){
 	char a;
 	cout << "What type of account do you want to open? \n"
 		 << "Savings (s) or Checking (c): ";
@@ -110,25 +133,14 @@ BankAccount open_account(){
 	if (a=='c'){
 		Checking b;
 		b.print();
-		return b;
 	}
 	else if (a=='s'){
 		Savings a;
 		a.print();
-		return a;
 	}
 }
 
-double BankAccount::withdraw(){
-	double w;
-	cout << "How much would you like to withdrawal?: ";
-	cin >> w;
-	if (w>balance){
-		cout << "You have overdrawn.";
-	}
-	else {balance-=w;}
-	print();
-}
+
 
 double BankAccount::deposit(){
 	double d;
