@@ -22,12 +22,41 @@ class BankAccount{
 	cout << "How much would you like to withdrawal?: ";
 	cin >> w;
 	if (w>balance){
-		cout << "You have overdrawn.";
+		cout << "You have overdrawn. \n";
 	}
 	else {balance-=w;}
 	print();
 }
-	void print();
+
+	void choice(){
+	char pick;
+	bool invalid = true;
+	while (invalid){
+		cout << "What would you like to do?: ";
+		cin >> pick;
+		if (pick == 'w'){
+			withdraw();
+			invalid = false;
+		}
+		else if (pick=='d'){
+			deposit();
+			invalid = false;
+		}
+		else if (pick=='t'){
+			print();
+			invalid = false;
+		}	
+		else {cout << "invalid entry - choose another.";
+		}
+	}
+}
+	void print(){
+	cout << "Name: " << name << endl
+		 << "Account number: " << acct_number << endl
+		 << "Phone number: " << phone << endl
+		 << "Balance: $" << balance << endl
+		 << "Interest Rate:" << rate << endl << endl; 
+}
 	
 	BankAccount(){
 		set_name();
@@ -72,7 +101,35 @@ class Savings: public BankAccount{
 		else {cout << "Withdrawal amount too high; transaction cancelled.";}
 	}
 	
+	void header(){
+		cout << "Savings: \n";
+	}
 	
+	void choice(){
+	char pick;
+	bool invalid = true;
+	while (invalid){
+		cout << "What would you like to do?: ";
+		cin >> pick;
+		if (pick == 'w'){
+			withdraw();
+			invalid = false;
+		}
+		else if (pick=='d'){
+			deposit();
+			invalid = false;
+		}
+		else if (pick=='t'){
+			print();
+			invalid = false;
+		}	
+		else {cout << "invalid entry - choose another.";
+		}
+	}
+}
+	Savings(){
+		void header();
+	}
 };
 class Checking: public BankAccount{
 	public:
@@ -84,24 +141,59 @@ class Checking: public BankAccount{
 	cin >> w;
 	if (w>balance){
 		cout << "You have overdrawn.";
-		balance = balance - w - 25;
+		balance-=(w+25);
 	}
 	else {balance-=w;}
 	print();
+	}
+	
+	void header(){
+		cout << "Checking: \n";
+		}
+	
+	void choice(){
+	char pick;
+	bool invalid = true;
+	while (invalid){
+		cout << "What would you like to do?: ";
+		cin >> pick;
+		if (pick == 'w'){
+			withdraw();
+			invalid = false;
+		}
+		else if (pick=='d'){
+			deposit();
+			invalid = false;
+		}
+		else if (pick=='t'){
+			print();
+			invalid = false;
+		}	
+		else {cout << "invalid entry - choose another.";
+		}
+	}
 }
+	Checking(){
+		void header();
+	}
 };
 
 void menu();
-void choice();
-char open_account();
-Checking mine;
+void open_account();
+char account_count = 0;
+Checking a;
+Savings b;
+char c_or_s;
 
 
 int main(){
 	menu();
+	open_account();
 	while(true){
-		open_account();
-		
+		cout << "checking or savings (c/s): ";
+		cin >> c_or_s;
+		if ((c_or_s=='c')||(c_or_s=='C')){a.choice();}
+		if ((c_or_s=='s')||(c_or_s=='S')){b.choice();}
 	}
 
 	
@@ -114,45 +206,25 @@ void menu(){
 		 << "Withdrawal money (w): " << endl
 		 << "Print totals: (t): " << endl;
 }
-void choice(){
-	char pick;
-	bool invalid = true;
-	while (invalid){
-		cout << "What would you like to do?: ";
-		cin >> pick;
-		if (pick == 'w'){
-			mine.withdraw();
-			invalid = false;
-		}
-		else if (pick=='d'){
-			mine.deposit();
-			invalid = false;
-		}
-		else if (pick=='t'){
-			mine.print();
-			invalid = false;
-		}	
-		else if (pick=='o'){
-			open_account();
-			invalid = false;
-		}
-		else {cout << "invalid entry - choose another.";
-		}
-	}
-}
 
-char open_account(){
+
+void open_account(){
 	char a;
-	cout << "What type of account do you want to open? \n"
-		 << "Savings (s) or Checking (c): ";
+	char b;
+	cout << "Would you like to open a new account (y/n)?: ";
 	cin >> a;
-	if (a=='c'){
-		Checking b;
-		b.print();
-	}
-	else if (a=='s'){
-		Savings a;
-		a.print();
+	if ((a=='y')||(a=='Y')){
+		cout << "What type of account do you want to open? \n"
+		 << "Savings (s) or Checking (c): ";
+		cin >> b;
+		if (b=='c'){
+			Checking mine;
+			mine.print();
+		}
+		else if (b=='s'){
+			Savings mine;
+			mine.print();
+		}
 	}
 }
 
@@ -160,13 +232,7 @@ char open_account(){
 
 
 
-void BankAccount::print(){
-	cout << "Name: " << name << endl
-		 << "Account number: " << acct_number << endl
-		 << "Phone number: " << phone << endl
-		 << "Balance: $" << balance << endl
-		 << "Interest Rate:" << rate << endl << endl; 
-}
+
 
 
 
