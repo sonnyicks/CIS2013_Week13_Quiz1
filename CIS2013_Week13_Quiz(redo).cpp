@@ -3,6 +3,7 @@
 using namespace std;
 
 int account_num = 1;
+void open_account(int);
 
 class BankAccount{
 	public:
@@ -43,15 +44,16 @@ class BankAccount{
 		cout << "Account name: " << name << endl;
 		cout << "Account number: " << acct << endl;
 		cout << "Phone: " << phone << endl;
-		cout << "Balance: " << balance << endl;
-		cout << "Interest rate: " << rate << endl;
+		cout << "Balance: $" << balance << endl;
+		cout << "Interest rate: " << rate << endl << endl;
 	}
+	
+
 	BankAccount(){
 		get_name();
 		get_acct();
 		get_phone();
 		get_balance();
-		info();
 	}
 };
 class Savings: public BankAccount{
@@ -70,6 +72,31 @@ class Savings: public BankAccount{
 			}
 		}	
 	}
+	
+		void choose(){
+	char a;
+	bool valid;
+	while (!valid){
+		cout << "What would you like to do?: ";
+		cin >> a;
+		if ((a=='w')||(a=='W')){
+			withdrawal();
+		} 
+		else if ((a=='d')||(a=='D')){
+			deposit();
+		}
+		else if ((a=='o')||(a=='O')){
+			open_account(account_num);
+		}
+		else if ((a=='p')||(a=='P')){
+			info();
+		}
+		else if ((a=='b')||(a=='B')){
+			valid = true;
+		}
+		else {cout << "invalid entry - ";}
+	}
+}
 };
 class Checking: public BankAccount{
 	public:
@@ -86,11 +113,47 @@ class Checking: public BankAccount{
 			balance-=w;
 		}	
 	}
+	
+	void choose(){
+		char a;
+		bool valid = false;
+		while(!valid){
+			cout << "What would you like to do?: ";
+			cin >> a;
+			if ((a=='w')||(a=='W')){
+				withdrawal();
+			} 
+			else if ((a=='d')||(a=='D')){
+				deposit();
+			}
+			else if ((a=='o')||(a=='O')){
+				open_account(account_num);
+			}
+			else if ((a=='p')||(a=='P')){
+				info();
+			}
+			else if ((a=='b')||(a=='B')){
+				valid = true;
+			}
+			else {cout << "invalid entry - ";}
+		}
+	}
 };
 
-void open_account(int);
+void menu();
+void action (Checking, Savings);
+
 int main(){
-	open_account(account_num);
+	cout << "Checking: " << endl;
+	Checking c;
+	cout << "Savings: " << endl;
+	Savings s;
+	while (true){
+		menu();
+		cout << "Checking or Savings?: ";
+		action(c, s);
+		
+	}
 	return 0;
 }
 
@@ -98,14 +161,53 @@ void menu(){
 	cout << "Withdraw (w): " << endl	
 		 << "Deposit (d): " << endl
 		 << "Open account (o): " << endl
-		 << "Print account info (p): " << endl;
+		 << "Print account info (p): " << endl 
+		 << "Back (b): " << endl << endl;
 }
 
 void open_account(int num){
 	char a;
-	cout << "Checking (c) or savings (s)?: ";
-	cin >> a;
-	if ((a=='c')||(a=='C')){
-		Savings s[num];
+	bool valid = false;
+	while (!valid){
+		cout << "Checking (c) or savings (s)?: ";
+		cin >> a;
+		if ((a=='s')||(a=='S')){
+			Savings s;
+			valid = true;
+		}
+		else if ((a=='c')||(a=='C')){
+			Checking c;
+			valid = true;
+		}
+		else {cout << "invalid entry -";}
 	}
 }
+
+void action (Checking a, Savings b){
+	char x;
+	cin >> x;
+	if((x=='c')||(x=='C')){
+		a.choose();
+	}
+	else if ((x=='s')||(x=='S')){
+		b.choose();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
